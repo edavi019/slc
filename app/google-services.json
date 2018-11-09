@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "580123072284",
+    "firebase_url": "https://shovellawn-2af80.firebaseio.com",
+    "project_id": "shovellawn-2af80",
+    "storage_bucket": "shovellawn-2af80.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:580123072284:android:7929362b46c970ad",
+        "android_client_info": {
+          "package_name": "com.example.mattformicola.loger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "580123072284-bdemimhl4s8dj8hq89aucp3ppji7pr1e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mattformicola.loger",
+            "certificate_hash": "5d40dc071b54f34b79df67afb966e317e436c4bd"
+          }
+        },
+        {
+          "client_id": "580123072284-5j13iqt55p62cfkc2fbbe7df6jvn7qtt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrW50QLelS0Ed1fL-uUbwcnkXzhPI3Tns"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "580123072284-5j13iqt55p62cfkc2fbbe7df6jvn7qtt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
