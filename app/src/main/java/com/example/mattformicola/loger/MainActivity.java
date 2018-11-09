@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.textView:
+            case R.id.register_btn:
                 finish();
                 startActivity(new Intent(this, RegisterActivity.class));
                 break;
