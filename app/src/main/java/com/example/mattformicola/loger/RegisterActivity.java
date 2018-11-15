@@ -116,6 +116,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 finish();
                 startActivity(new Intent(this, MainActivity.class));
                 break;
+
+            case R.id.WORKER:
+                finish();
+                startActivity(new Intent(this, MapsActivity.class));
+                break;
+
         }
     }
 }
