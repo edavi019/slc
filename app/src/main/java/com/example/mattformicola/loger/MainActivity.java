@@ -10,6 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -21,12 +26,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     EditText editTextEmail, editTextPassword;
     FirebaseAuth mAuth;
+    //private GoogleApiClient mGoogleApiClient;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+      //  GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+      //          .requestIdToken(getString(R.string.default_web_client_id))
+      //          .requestEmail()
+      //          .build();
+      //  mGoogleApiClient = new GoogleApiClient.Builder(this)
+        //      .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+        //        .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+      //          .build();
+    //
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -106,6 +123,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             finish();
             startActivity(new Intent(this, RegisterActivity.class));
         }
+      //  GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        // updateUI(account);
+
+
     }
 
 

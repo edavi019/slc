@@ -26,8 +26,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     Button btnRegister;
     private FirebaseAuth mAuth;
     String TAG = "ELLIOT";
-    DatabaseReference mDatabase;
-
+    //DatabaseReference mDatabase;
 
 
     @Override
@@ -43,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         editTextPhoneNumber = findViewById(R.id.editTextPhoneNumber);
 
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+        //mDatabase = FirebaseDatabase.getInstance().getReference("Users");
 
 
         btnRegister = findViewById(R.id.register_btn);
@@ -59,12 +58,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void registerUser() {
-         final String email = editTextEmail.getText().toString().trim();
-         final String password = editTextPassword.getText().toString().trim();
-         final String FirstName = editTextFirstName.getText().toString().trim();
-         final String LastName = editTextLastName.getText().toString().trim();
-         final String ZipCode = editTextZipCode.getText().toString().trim();
-             final String PhoneNumber = editTextPhoneNumber.getText().toString().trim();
+        final String email = editTextEmail.getText().toString().trim();
+        Log.d("value here:", email);
+        final String password = editTextPassword.getText().toString().trim();
+        final String FirstName = editTextFirstName.getText().toString().trim();
+        final String LastName = editTextLastName.getText().toString().trim();
+        final String ZipCode = editTextZipCode.getText().toString().trim();
+        final String PhoneNumber = editTextPhoneNumber.getText().toString().trim();
 
         if (email.isEmpty()) {
             editTextEmail.setError("Email is required");
@@ -110,37 +110,37 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             editTextPhoneNumber.requestFocus();
             return;
         }
-      //  if(!Patterns.PHONE.matcher(PhoneNumber).matches()){
-      //      editTextPhoneNumber.setError("Please enter a valid phone number");
-      //      editTextPhoneNumber.requestFocus();
-      //      return;
-      //  }
-
+          if(!Patterns.PHONE.matcher(PhoneNumber).matches()){
+              editTextPhoneNumber.setError("Please enter a valid phone number");
+              editTextPhoneNumber.requestFocus();
+              return;
+          }
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                                Users users = new Users(
-                                       email, FirstName, LastName, PhoneNumber, ZipCode
+                            User user = new User(
+                                    email, FirstName, LastName, PhoneNumber, ZipCode
 
-                                );
+                            );
 
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseDatabase.getInstance().getReference("Users")
-                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                     .setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
 
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
+                                    if (task.isSuccessful()) {
                                         //displays success
-                                        Toast.makeText(getApplicationContext(),"User Registered Successful", Toast.LENGTH_LONG).show();
-                                    }else{
+                                        Toast.makeText(getApplicationContext(), "User Registered Successful", Toast.LENGTH_LONG).show();
+
+                                    } else {
                                         //displays failure to register
-                                        Toast.makeText(getApplicationContext(),"User Registered UnSuccessfully", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), "User Registered UnSuccessfully", Toast.LENGTH_LONG).show();
 
                                     }
                                 }
@@ -161,8 +161,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-    public void updateUI(FirebaseUser user){
-        Toast.makeText(this, "Registration Complete", Toast.LENGTH_SHORT).show();
+    public void updateUI(FirebaseUser user) {
+//        Toast.makeText(this, "Registration Complete", Toast.LENGTH_SHORT).show();
     }
 
     @Override
