@@ -12,6 +12,7 @@ public class PickActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick);
     }
+<<<<<<< HEAD
 
     public void onClick(View view) {
         switch (view.getId()) {
@@ -23,4 +24,6 @@ public class PickActivity extends AppCompatActivity {
 
         }
     }
+=======
+>>>>>>> 67151f90f8351c9f2691eac41fc774cab9df53e5
 }
