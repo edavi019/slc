@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.content.Intent;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.AuthResult;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     EditText editTextEmail, editTextPassword;
     FirebaseAuth mAuth;
@@ -50,11 +51,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button signIn = findViewById(R.id.signinBtn);
         Button register = findViewById(R.id.registerBtn);
+        Button worker = findViewById(R.id.WORKER);
 
 //        findViewById(R.id.signinBtn).setOnClickListener(this);
 //        findViewById(R.id.textView2).setOnClickListener(this);
 
-        signIn.setOnClickListener(new View.OnClickListener() {
+
+        signIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), PickActivity.class);
@@ -62,10 +65,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        register.setOnClickListener(new View.OnClickListener() {
+        register.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(i);
+            }
+        });
+
+        worker.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
                 startActivity(i);
             }
         });
@@ -138,9 +149,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, RegisterActivity.class));
                 break;
 
+            case R.id.registerBtn:
+                registerUser();
+                break;
+
             case R.id.signinBtn:
                 userLogin();
                 break;
+
+            /*case R.id.WORKER:
+                finish();
+                startActivity(new Intent(this, MapsActivity.class));
+                break;
+                */
         }
     }
 }
