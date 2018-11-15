@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,6 +26,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     Button btnRegister;
     private FirebaseAuth mAuth;
     String TAG = "ELLIOT";
+    DatabaseReference mDatabase;
+
 
 
     @Override
@@ -39,6 +43,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         editTextPhoneNumber = findViewById(R.id.editTextPhoneNumber);
 
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+
 
         btnRegister = findViewById(R.id.register_btn);
         btnRegister.setOnClickListener(this);
@@ -49,16 +55,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-//        updateUI(currentUser);
+        updateUI(currentUser);
     }
 
     private void registerUser() {
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
-        String FirstName = editTextFirstName.getText().toString().trim();
-        String LastName = editTextLastName.getText().toString().trim();
-        String ZipCode = editTextZipCode.getText().toString().trim();
-        String PhoneNumber = editTextPhoneNumber.getText().toString().trim();
+         final String email = editTextEmail.getText().toString().trim();
+         final String password = editTextPassword.getText().toString().trim();
+         final String FirstName = editTextFirstName.getText().toString().trim();
+         final String LastName = editTextLastName.getText().toString().trim();
+         final String ZipCode = editTextZipCode.getText().toString().trim();
+             final String PhoneNumber = editTextPhoneNumber.getText().toString().trim();
 
         if (email.isEmpty()) {
             editTextEmail.setError("Email is required");
@@ -104,6 +110,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             editTextPhoneNumber.requestFocus();
             return;
         }
+      //  if(!Patterns.PHONE.matcher(PhoneNumber).matches()){
+      //      editTextPhoneNumber.setError("Please enter a valid phone number");
+      //      editTextPhoneNumber.requestFocus();
+      //      return;
+      //  }
 
 
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -111,10 +122,31 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                                Users users = new Users(
+                                       email, FirstName, LastName, PhoneNumber, ZipCode
+
+                                );
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            FirebaseDatabase.getInstance().getReference("Users")
+                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                     .setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        //displays success
+                                        Toast.makeText(getApplicationContext(),"User Registered Successful", Toast.LENGTH_LONG).show();
+                                    }else{
+                                        //displays failure to register
+                                        Toast.makeText(getApplicationContext(),"User Registered UnSuccessfully", Toast.LENGTH_LONG).show();
+
+                                    }
+                                }
+                            });
+
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
