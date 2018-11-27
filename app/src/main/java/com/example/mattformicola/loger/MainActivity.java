@@ -3,6 +3,7 @@ package com.example.mattformicola.loger;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.content.Intent;
@@ -11,51 +12,30 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     EditText editTextEmail, editTextPassword;
-    FirebaseAuth mAuth;
-    //private GoogleApiClient mGoogleApiClient;
-
+    String TAG = "SIGN IN ";
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-      //  GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-      //          .requestIdToken(getString(R.string.default_web_client_id))
-      //          .requestEmail()
-      //          .build();
-      //  mGoogleApiClient = new GoogleApiClient.Builder(this)
-        //      .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-        //        .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-      //          .build();
-    //
 
         mAuth = FirebaseAuth.getInstance();
 
 
         Button signIn = findViewById(R.id.signinBtn);
         Button register = findViewById(R.id.registerBtn);
-        Button worker = findViewById(R.id.WORKER);
-
-//        findViewById(R.id.signinBtn).setOnClickListener(this);
-//        findViewById(R.id.textView2).setOnClickListener(this);
-
 
         signIn.setOnClickListener(new OnClickListener() {
             @Override
@@ -73,16 +53,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             }
         });
 
-        worker.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
-                startActivity(i);
-            }
-        });
-
-
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
+    }
+
 
 
     private void userLogin() {
@@ -114,28 +93,38 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             return;
         }
 
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "User Registered Successful", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "User Registered Unsuccessful", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    public void SignIn(String email, String password){
 
-        if (mAuth.getCurrentUser() != null) {
-            finish();
-            startActivity(new Intent(this, RegisterActivity.class));
-        }
-      //  GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        // updateUI(account);
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
+
+
+    public void updateUI(FirebaseUser user) {
+//        Toast.makeText(this, "Registration Complete", Toast.LENGTH_SHORT).show();
+
 
 
     }
@@ -149,19 +138,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 startActivity(new Intent(this, RegisterActivity.class));
                 break;
 
-            case R.id.registerBtn:
-                registerUser();
-                break;
-
-            case R.id.signinBtn:
+            case R.id.signinBtn: {
+                SignIn(editTextEmail.getText().toString(), editTextPassword.getText().toString());
                 userLogin();
                 break;
+            }
 
-            /*case R.id.WORKER:
-                finish();
-                startActivity(new Intent(this, MapsActivity.class));
-                break;
-                */
+
+
         }
     }
 }

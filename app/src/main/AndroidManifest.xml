@@ -3,17 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.mattformicola.loger">
 
-<<<<<<< HEAD
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-=======
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"/>
->>>>>>> 67151f90f8351c9f2691eac41fc774cab9df53e5
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -23,8 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -35,7 +32,7 @@
         </activity>
         <activity android:name=".PickActivity" />
         <activity android:name=".RegisterActivity" />
-<<<<<<< HEAD
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -50,10 +47,11 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
-=======
-
->>>>>>> 67151f90f8351c9f2691eac41fc774cab9df53e5
+            android:label="@string/title_activity_maps" />
+        <activity
+            android:name=".WorkerZip"
+            android:label="@string/title_activity_worker_zip"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -159,10 +159,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     }
                 });
 
+
     }
 
     public void updateUI(FirebaseUser user) {
 //        Toast.makeText(this, "Registration Complete", Toast.LENGTH_SHORT).show();
+
+
+
     }
 
     @Override
@@ -177,10 +181,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(new Intent(this, MainActivity.class));
                 break;
 
-            case R.id.WORKER:
-                finish();
-                startActivity(new Intent(this, MapsActivity.class));
-                break;
+        //    case R.id.WORKER:
+        //        finish();
+        //        startActivity(new Intent(this, MapsActivity.class));
+        //        break;
 
         }
     }
