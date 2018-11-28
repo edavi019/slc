@@ -51,6 +51,10 @@
         <activity
             android:name=".WorkerZip"
             android:label="@string/title_activity_worker_zip"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RequesterZipActivity"
+            android:label="@string/title_activity_requester_zip"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

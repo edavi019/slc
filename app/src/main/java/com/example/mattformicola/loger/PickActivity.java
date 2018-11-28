@@ -19,14 +19,14 @@ public class PickActivity extends AppCompatActivity {
         workerbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), WorkerZipCode.class);
+                Intent i = new Intent(getApplicationContext(), WorkerZipActivity.class);
                 startActivity(i);
             }
         });
         requesterbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                Intent i = new Intent(getApplicationContext(), RequesterZipActivity.class);
                 startActivity(i);
             }
         });

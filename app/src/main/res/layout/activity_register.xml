@@ -58,17 +58,6 @@
         app:layout_constraintStart_toStartOf="@+id/editTextLastName"
         app:layout_constraintTop_toBottomOf="@+id/editTextLastName" />
 
-    <EditText
-        android:id="@+id/editTextZipCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="ZIP CODE"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/editTextEmail"
-        app:layout_constraintStart_toStartOf="@+id/editTextEmail"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
 
     <EditText
         android:id="@+id/editTextPhoneNumber"
@@ -78,9 +67,9 @@
         android:ems="10"
         android:hint="PHONE"
         android:inputType="phone"
-        app:layout_constraintEnd_toEndOf="@+id/editTextZipCode"
-        app:layout_constraintStart_toStartOf="@+id/editTextZipCode"
-        app:layout_constraintTop_toBottomOf="@+id/editTextZipCode" />
+        app:layout_constraintEnd_toEndOf="@+id/editTextEmail"
+        app:layout_constraintStart_toStartOf="@+id/editTextEmail"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
 
     <EditText
         android:id="@+id/editTextUserName"

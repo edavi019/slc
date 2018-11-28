@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
-    EditText editTextEmail, editTextPassword, editTextFirstName, editTextLastName, editTextZipCode, editTextPhoneNumber;
+    EditText editTextEmail, editTextPassword, editTextFirstName, editTextLastName, editTextPhoneNumber;
     Button btnRegister;
     private FirebaseAuth mAuth;
     String TAG = "ELLIOT";
@@ -38,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextLastName = findViewById(R.id.editTextLastName);
-        editTextZipCode = findViewById(R.id.editTextZipCode);
+        //editTextZipCode = findViewById(R.id.editTextZipCode);
         editTextPhoneNumber = findViewById(R.id.editTextPhoneNumber);
 
         mAuth = FirebaseAuth.getInstance();
@@ -63,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         final String password = editTextPassword.getText().toString().trim();
         final String FirstName = editTextFirstName.getText().toString().trim();
         final String LastName = editTextLastName.getText().toString().trim();
-        final String ZipCode = editTextZipCode.getText().toString().trim();
+      //  final String ZipCode = editTextZipCode.getText().toString().trim();
         final String PhoneNumber = editTextPhoneNumber.getText().toString().trim();
 
         if (email.isEmpty()) {
@@ -100,11 +100,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             editTextLastName.requestFocus();
             return;
         }
-        if (ZipCode.isEmpty()) {
-            editTextZipCode.setError("Zip Code is required");
-            editTextZipCode.requestFocus();
-            return;
-        }
+
         if (PhoneNumber.isEmpty()) {
             editTextPhoneNumber.setError("Phone Number is required");
             editTextPhoneNumber.requestFocus();
@@ -122,7 +118,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             User user = new User(
-                                    email, FirstName, LastName, PhoneNumber, ZipCode
+                                    email, FirstName, LastName, PhoneNumber
 
                             );
 
@@ -174,6 +170,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         switch (view.getId()) {
             case R.id.register_btn:
                 registerUser();
+                Toast.makeText(getApplicationContext(), "User Registered Successful", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, PickActivity.class));
                 break;
 
             case R.id.textView:
@@ -181,10 +179,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(new Intent(this, MainActivity.class));
                 break;
 
-        //    case R.id.WORKER:
-        //        finish();
-        //        startActivity(new Intent(this, MapsActivity.class));
-        //        break;
 
         }
     }
