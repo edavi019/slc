@@ -94,7 +94,7 @@ public class RegNewActivity extends AppCompatActivity {
                                     }
                                     else{
                                         Log.d("Radio button Worker", "Checked");
-                                        startActivity(new Intent(RegNewActivity.this, DisplayListOfRequestersAcitivty.class));
+                                        startActivity(new Intent(RegNewActivity.this, ListOfWorkersActivity.class));
                                     }
 
 
