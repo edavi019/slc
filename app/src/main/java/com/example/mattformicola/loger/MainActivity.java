@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         register.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
+                Intent i = new Intent(getApplicationContext(), RegNewActivity.class);
                 startActivity(i);
             }
         });
@@ -64,10 +64,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
 
 
-    private void userLogin() {
+    private void SignIn() {
 
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
+         String email = editTextEmail.getText().toString().trim();
+         String password = editTextPassword.getText().toString().trim();
 
         if (email.isEmpty()) {
             editTextEmail.setError("Email is required");
@@ -94,9 +94,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         }
 
 
-    }
-
-    public void SignIn(String email, String password){
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -139,8 +136,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 break;
 
             case R.id.signinBtn: {
-                SignIn(editTextEmail.getText().toString(), editTextPassword.getText().toString());
-                userLogin();
+                SignIn();
                 break;
             }
 

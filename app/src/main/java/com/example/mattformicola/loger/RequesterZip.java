@@ -6,4 +6,7 @@ public class RequesterZip {
     public RequesterZip(String RequesterZip){
         this.RequesterZip = RequesterZip;
     }
+    public String RequesterZip(){
+        return RequesterZip;
+    }
 }

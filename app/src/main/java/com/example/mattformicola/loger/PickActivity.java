@@ -5,50 +5,58 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-public class PickActivity extends AppCompatActivity {
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+public class PickActivity extends AppCompatActivity implements View.OnClickListener {
+
+    Button workerbtn;
+    Button requesterbtn;
+    private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick);
 
-        Button workerbtn = findViewById(R.id.WORKERBTN);
-        Button requesterbtn = findViewById(R.id.REQUESTERBTN);
+        workerbtn = findViewById(R.id.WORKERBTN);
+        requesterbtn = findViewById(R.id.REQUESTERBTN);
 
-        workerbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), WorkerZipActivity.class);
-                startActivity(i);
+        workerbtn.setOnClickListener(this);
+        requesterbtn.setOnClickListener(this);
+        mAuth = FirebaseAuth.getInstance();
+
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
+    }
+
+    public void updateUI(FirebaseUser user) {
+//        Toast.makeText(this, "Registration Complete", Toast.LENGTH_SHORT).show();
+
+
+
+    }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.WORKERBTN:
+                    startActivity(new Intent(this, WorkerZipActivity.class));
+                    break;
+
+                case R.id.REQUESTERBTN:
+                    startActivity(new Intent(this, ListOfWorkersActivity.class));
+                    break;
+
+
             }
-        });
-        requesterbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), RequesterZipActivity.class);
-                startActivity(i);
-            }
-        });
-
-
-        // workerbtn.setOnClickListener(new View.OnClickListener() {
-        //     Intent i = new Intent(getApplicationContext(), MapsActivity.class);
-        //     startActivity;
-       /* });
-
-
-    public void onClick(View view) {
-        switch (view.getId()) {
-
-            case R.id.WORKER:
-                finish();
-                startActivity(new Intent(this, MapsActivity.class));
-                break;
-
         }
     }
-
-    */
-    }
-}
