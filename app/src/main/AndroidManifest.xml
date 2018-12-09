@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".PickActivity" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".RegNewActivity" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -56,8 +56,7 @@
             android:name=".RequesterZipActivity"
             android:label="@string/title_activity_requester_zip"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".DisplayListOfWorkersActivity" />
-        <activity android:name=".DisplayListOfRequestersAcitivty"></activity>
+
         <activity android:name=".RegNewActivity" />
         <activity android:name=".ListOfWorkersActivity" >
 

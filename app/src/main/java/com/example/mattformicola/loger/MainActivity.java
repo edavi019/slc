@@ -20,7 +20,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class MainActivity extends AppCompatActivity implements OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
     EditText editTextEmail, editTextPassword;
     String TAG = "SIGN IN ";
@@ -125,25 +125,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
 
     }
-
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.register_btn:
-                finish();
-                startActivity(new Intent(this, RegisterActivity.class));
-                break;
-
-            case R.id.signinBtn: {
-                SignIn();
-                break;
-            }
-
-
-
-        }
-    }
 }
+
 
 
