@@ -39,7 +39,7 @@ public class ListOfWorkersActivity extends AppCompatActivity {
 
 
 
-        refreshButton = findViewById(R.id.refreshButton);
+//        refreshButton = findViewById(R.id.refreshButton);
         recyclerView = findViewById(R.id.ReyclerView_Workers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
