@@ -8,10 +8,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,7 +41,8 @@ public class ListOfWorkersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_list_of_workers);
 
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
 //        refreshButton = findViewById(R.id.refreshButton);
         recyclerView = findViewById(R.id.ReyclerView_Workers);
@@ -94,6 +98,35 @@ public class ListOfWorkersActivity extends AppCompatActivity {
 
         /*adapter = new UserListViewAdapter(ListOfWorkersActivity.this,ulist);
         recyclerView.setAdapter(adapter);*/
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_inbox, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.inbox){
+            Toast.makeText(this, "Clicked on Inbox", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(ListOfWorkersActivity.this, ListOfMessagesActivity.class));
+        }
+
+        if(id == R.id.logout){
+            Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show();
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(ListOfWorkersActivity.this, MainActivity.class));
+        }
+
+        if(id == android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

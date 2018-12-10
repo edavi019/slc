@@ -1,5 +1,7 @@
 package com.example.mattformicola.loger;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,21 +38,17 @@ public class MainActivity extends AppCompatActivity {
 
         Button signIn = findViewById(R.id.signinBtn);
         Button register = findViewById(R.id.registerBtn);
+        editTextEmail = findViewById(R.id.editTextEmail);
+        editTextPassword = findViewById(R.id.editTextPassword);
 
-        signIn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), PickActivity.class);
-                startActivity(i);
-            }
+        signIn.setOnClickListener(v -> {
+
+            SignIn();
         });
 
-        register.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), RegNewActivity.class);
-                startActivity(i);
-            }
+        register.setOnClickListener(v -> {
+            Intent i = new Intent(getApplicationContext(), RegNewActivity.class);
+            startActivity(i);
         });
 
     }
@@ -59,7 +57,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        if(currentUser!=null) {
+            Log.d("Currently logged in", currentUser.getEmail());
+            int worker = pref.getInt("workerOrNot", -1);
+            Log.d("Woker or not", "" + worker);
+            if(worker == 1){
+                startActivity(new Intent(MainActivity.this, ListOfRequestersActivity.class));
+            }
+            else{
+                startActivity(new Intent(MainActivity.this, ListOfWorkersActivity.class));
+            }
+        }
     }
 
 
@@ -96,24 +106,32 @@ public class MainActivity extends AppCompatActivity {
 
 
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithEmail:success");
+                        FirebaseUser user = mAuth.getCurrentUser();
+
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                        int worker = preferences.getInt("workerOrNot", -1);
+
+                        if(worker == 1){
+                            startActivity(new Intent(MainActivity.this, ListOfRequestersActivity.class));
+                        }
+                        else{
+                            startActivity(new Intent(MainActivity.this, ListOfWorkersActivity.class));
                         }
 
-                        // ...
+                        updateUI(user);
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithEmail:failure", task.getException());
+                        Toast.makeText(MainActivity.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                        updateUI(null);
                     }
+
+                    // ...
                 });
     }
 

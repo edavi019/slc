@@ -1,14 +1,18 @@
 package com.example.mattformicola.loger;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +38,8 @@ public class ListOfRequestersActivity  extends AppCompatActivity {
         radioRef = FirebaseDatabase.getInstance().getReference().child("Users").child("radio").child("2131230870");
         Log.d("radio ID is ", ""+radioRef.toString());
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         // refreshButton = findViewById(R.id.refreshButton);
         recyclerView = findViewById(R.id.RecyclerView_Requesters);
@@ -89,6 +95,33 @@ public class ListOfRequestersActivity  extends AppCompatActivity {
         recyclerView.setAdapter(adapter);*/
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        getMenuInflater().inflate(R.menu.menu_inbox, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.inbox){
+            Toast.makeText(this, "Clicked on Inbox", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(ListOfRequestersActivity.this, ListOfMessagesActivity.class));
+        }
+        if(id == android.R.id.home){
+            finish();
+        }
+
+        if(id == R.id.logout){
+            Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show();
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(ListOfRequestersActivity.this, MainActivity.class));
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
 
