@@ -4,7 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    android:background="#FFFAFA"
+    tools:context=".RegNewActivity">
+
+
+
+
 
     <TextView
         android:id="@+id/textView2"
@@ -156,14 +161,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Worker" />
+            android:text="Worker"/>
+            <!--//android:onClick="RadioButtonClicked"-->
 
         <RadioButton
             android:id="@+id/radioButtonRequester"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Requester" />
+            android:text="Requester"
+            android:onClick="radioButtonRequesterClicked"/>
+
     </RadioGroup>
 
 </android.support.constraint.ConstraintLayout>

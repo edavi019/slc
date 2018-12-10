@@ -45,6 +45,8 @@ public class RegNewActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.register_btn);
         radioGroup = findViewById(R.id.radioGroupJob);
 
+
+
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +61,19 @@ public class RegNewActivity extends AppCompatActivity {
 
                 final int radio = radioGroup.getCheckedRadioButtonId();
 
+                String userActivity = "";
+                boolean checked = ((RadioButton) v).isChecked();
+                switch (v.getId()){
+                    case R.id.radioButtonWorker:
+                        if (checked)
+                            userActivity = "worker";
+                        break;
+                    case R.id.radioButtonRequester:
+                        if (checked)
+                            userActivity = "requester";
+                        break;
+                }
+
 
                 radioButtonRequester = R.id.radioButtonRequester;
                 radioButtonWorker = R.id.radioButtonWorker;
@@ -69,6 +84,8 @@ public class RegNewActivity extends AppCompatActivity {
 //                Log.d("radio is", radioButtonRequester.getText().toString());
 //                Log.d("radio is ", radioButtonWorker.getText().toString());
 
+
+                final String finalUserActivity = userActivity;
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(RegNewActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -90,11 +107,13 @@ public class RegNewActivity extends AppCompatActivity {
 
                                     if (radioButtonRequester == radio) {
                                         Log.d("Radio button Requester", "Checked");
+                                       // myRef.child("User").child("radio").setValue(finalUserActivity);
                                         startActivity(new Intent(RegNewActivity.this, ListOfWorkersActivity.class));
                                     }
                                     else{
                                         Log.d("Radio button Worker", "Checked");
-                                        startActivity(new Intent(RegNewActivity.this, ListOfWorkersActivity.class));
+                                        //myRef.child("User").child("radio").setValue(finalUserActivity);
+                                        startActivity(new Intent(RegNewActivity.this, ListOfRequestersActivity.class));
                                     }
 
 
@@ -116,7 +135,23 @@ public class RegNewActivity extends AppCompatActivity {
 
     }
 
+    public void radioButtonRequesterClicked(View v) {
+        String userActivity = "";
+        boolean checked = ((RadioButton) v).isChecked();
+        switch (v.getId()){
+            case R.id.radioButtonWorker:
+                if (checked)
+                    userActivity = "worker";
+                break;
+            case R.id.radioButtonRequester:
+                if (checked)
+                    userActivity = "requester";
+                break;
+        }
+    }
+
     void updateUI(String s) {
 
     }
+
 }

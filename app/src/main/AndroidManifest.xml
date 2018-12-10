@@ -61,6 +61,7 @@
         <activity android:name=".ListOfWorkersActivity" >
 
         </activity>
+        <activity android:name=".ListOfRequestersActivity" />
     </application>
 
 </manifest>
