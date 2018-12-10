@@ -57,7 +57,7 @@ public class ListOfWorkersActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ulist = new ArrayList<UserList>();
                 Log.d("Recycler" , "log2");
-//                Log.d("UII",""+dataSnapshot.toString());
+//                Log.d("UII",""+dataSnapshot.toString()); 
 
                 for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
                     UserList u = dataSnapshot1.getValue(UserList.class);
