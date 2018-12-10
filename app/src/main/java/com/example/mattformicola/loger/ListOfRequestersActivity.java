@@ -45,7 +45,7 @@ public class ListOfRequestersActivity  extends AppCompatActivity {
 
        //mDatabase.orderByChild("radio").equalTo(2131230870).addValueEventListener(new ValueEventListener() {
 
-        mDatabase.orderByChild("radio").equalTo(2131230868).addValueEventListener(new ValueEventListener() {
+        mDatabase.orderByChild("radio").equalTo(1).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ulist = new ArrayList<UserList>();

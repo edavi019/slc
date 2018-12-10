@@ -1,7 +1,9 @@
 package com.example.mattformicola.loger;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.prefs.Preferences;
 
 public class RegNewActivity extends AppCompatActivity {
 
@@ -52,32 +56,32 @@ public class RegNewActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 final String email = editTextEmail.getText().toString();
-                String password = editTextPassword.getText().toString();
+                final String password = editTextPassword.getText().toString();
                 final String firstName = editTextFirstName.getText().toString();
                 final String lastName = editTextLastName.getText().toString();
                 final String userName = editTextUsername.getText().toString();
                 final String phone = editTextPhoneNumber.getText().toString();
                 final String zip = editTextZip.getText().toString();
 
-                final int radio = radioGroup.getCheckedRadioButtonId();
+                int radio = radioGroup.getCheckedRadioButtonId();
 
                 String userActivity = "";
-                boolean checked = ((RadioButton) v).isChecked();
-                switch (v.getId()){
+
+                switch (radio){
                     case R.id.radioButtonWorker:
-                        if (checked)
                             userActivity = "worker";
                         break;
                     case R.id.radioButtonRequester:
-                        if (checked)
                             userActivity = "requester";
                         break;
                 }
 
+                Log.d("current selection", userActivity);
 
                 radioButtonRequester = R.id.radioButtonRequester;
                 radioButtonWorker = R.id.radioButtonWorker;
 
+                final int radioFinal = (userActivity.equals("worker") ? 1 : 2);
 
                 Log.d("Email is", email);
                 Log.d("password is", password);
@@ -85,7 +89,6 @@ public class RegNewActivity extends AppCompatActivity {
 //                Log.d("radio is ", radioButtonWorker.getText().toString());
 
 
-                final String finalUserActivity = userActivity;
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(RegNewActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -99,20 +102,23 @@ public class RegNewActivity extends AppCompatActivity {
                                     // Write a message to the database
                                     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-                                    User person = new User(email, firstName, lastName, userName, phone, zip, radio);
+                                    User person = new User(email, firstName, lastName, userName, phone, zip, radioFinal);
 
                                     DatabaseReference myRef = database.getReference("Users");
                                     Log.d("Current user is", "" + user.getUid());
                                     myRef.child(user.getUid()).setValue(person);
 
-                                    if (radioButtonRequester == radio) {
+                                    SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(RegNewActivity.this);
+                                    SharedPreferences.Editor edit = pref.edit();
+                                    edit.putInt("workerOrNot", radioFinal);
+                                    edit.apply();
+
+                                    if (radioFinal == 1) {
                                         Log.d("Radio button Requester", "Checked");
-                                       // myRef.child("User").child("radio").setValue(finalUserActivity);
                                         startActivity(new Intent(RegNewActivity.this, ListOfWorkersActivity.class));
                                     }
                                     else{
                                         Log.d("Radio button Worker", "Checked");
-                                        //myRef.child("User").child("radio").setValue(finalUserActivity);
                                         startActivity(new Intent(RegNewActivity.this, ListOfRequestersActivity.class));
                                     }
 
@@ -136,18 +142,18 @@ public class RegNewActivity extends AppCompatActivity {
     }
 
     public void radioButtonRequesterClicked(View v) {
-        String userActivity = "";
-        boolean checked = ((RadioButton) v).isChecked();
-        switch (v.getId()){
-            case R.id.radioButtonWorker:
-                if (checked)
-                    userActivity = "worker";
-                break;
-            case R.id.radioButtonRequester:
-                if (checked)
-                    userActivity = "requester";
-                break;
-        }
+//        String userActivity = "";
+//        boolean checked = ((RadioButton) v).isChecked();
+//        switch (v.getId()){
+//            case R.id.radioButtonWorker:
+//                if (checked)
+//                    userActivity = "worker";
+//                break;
+//            case R.id.radioButtonRequester:
+//                if (checked)
+//                    userActivity = "requester";
+//                break;
+//        }
     }
 
     void updateUI(String s) {

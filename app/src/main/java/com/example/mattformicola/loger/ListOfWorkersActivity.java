@@ -52,7 +52,7 @@ public class ListOfWorkersActivity extends AppCompatActivity {
         //Query queries= mDatabase.child("ItemName").orderByChild("name").equals(itemName);
         //Query queryRef = mDatabase.child("radio").orderByChild("radio").equalTo("2131230875");
 
-        mDatabase.orderByChild("radio").equalTo(2131230869).addValueEventListener(new ValueEventListener() {
+        mDatabase.orderByChild("radio").equalTo(2).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ulist = new ArrayList<UserList>();
