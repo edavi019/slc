@@ -3,11 +3,15 @@ package com.example.mattformicola.loger;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.util.SortedListAdapterCallback;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import android.content.Context;
 import android.widget.Toast;
@@ -18,20 +22,28 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class UserListViewAdapter extends RecyclerView.Adapter<UserListViewAdapter.MyViewHolder > {
+public class UserListViewAdapter extends RecyclerView.Adapter<UserListViewAdapter.MyViewHolder> implements Filterable {
 
     Context context;
-    ArrayList<UserList> userLists;
+    private ArrayList<UserList> userLists;
     FirebaseUser fuser;
+   private ArrayList<UserList> userListfull;
 
 
     public UserListViewAdapter(Context c , ArrayList<UserList> u){
         context = c;
         userLists = u;
         fuser = FirebaseAuth.getInstance().getCurrentUser();
-    }
+        userListfull = new ArrayList<>(userLists);
 
+    }
+/*    UserListViewAdapter(ArrayList<UserList> userLists){
+        this.userLists = userLists;
+        userListfull = new ArrayList<>(userLists);
+    }
+*/
 
     @NonNull
     @Override
@@ -73,6 +85,41 @@ public class UserListViewAdapter extends RecyclerView.Adapter<UserListViewAdapte
         return userLists.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return userFilter;
+    }
+
+    private final Filter userFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<UserList> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(userListfull);
+            } else {
+                String filterPattern = constraint.toString().trim();
+
+                for (UserList user : userListfull) {
+                    if (user.getZip().contains(filterPattern)) {
+                        filteredList.add(user);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            userLists.clear();
+            userLists.addAll((ArrayList<UserList>)results.values);
+            notifyDataSetChanged();
+
+        }
+    };
+
     class MyViewHolder extends RecyclerView.ViewHolder{
         // each data item is just a string in this case
         TextView userNameTv;
@@ -88,5 +135,6 @@ public class UserListViewAdapter extends RecyclerView.Adapter<UserListViewAdapte
             card = v.findViewById(R.id.user_card);
         }
     }
+
 
 }

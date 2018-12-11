@@ -7,11 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.app.SearchManager;
+import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,10 +34,9 @@ public class ListOfWorkersActivity extends AppCompatActivity {
 
     //Firebase
     DatabaseReference mDatabase;
-    DatabaseReference radioRef;
     RecyclerView recyclerView;
-    UserListViewAdapter adapter;
 
+    UserListViewAdapter adapter;
     ArrayList<UserList> ulist = new ArrayList<>();
 
     @Override
@@ -44,17 +47,12 @@ public class ListOfWorkersActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-//        refreshButton = findViewById(R.id.refreshButton);
         recyclerView = findViewById(R.id.ReyclerView_Workers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         Log.d("Recycler" , "log1");
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
-        //radioRef = FirebaseDatabase.getInstance().getReference().child("Users").child("radio");
 
-
-        //Query queries= mDatabase.child("ItemName").orderByChild("name").equals(itemName);
-        //Query queryRef = mDatabase.child("radio").orderByChild("radio").equalTo("2131230875");
 
         mDatabase.orderByChild("radio").equalTo(2).addValueEventListener(new ValueEventListener() {
             @Override
@@ -102,11 +100,26 @@ public class ListOfWorkersActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.menu_inbox, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        //searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
         return super.onCreateOptionsMenu(menu);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

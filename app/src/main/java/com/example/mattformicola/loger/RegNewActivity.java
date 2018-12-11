@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -85,9 +86,48 @@ public class RegNewActivity extends AppCompatActivity {
 
                 Log.d("Email is", email);
                 Log.d("password is", password);
-//                Log.d("radio is", radioButtonRequester.getText().toString());
-//                Log.d("radio is ", radioButtonWorker.getText().toString());
 
+
+                if (email.isEmpty()) {
+                    editTextEmail.setError("Email is required");
+                    editTextEmail.requestFocus();
+                }
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    editTextEmail.setError("Please enter a valid email");
+                    editTextEmail.requestFocus();
+                }
+                if (password.isEmpty()) {
+                    editTextPassword.setError("Password is required");
+                    editTextPassword.requestFocus();
+                }
+                if (password.length() < 6) {
+                    editTextPassword.setError("Minimum length of six characters is required");
+                    editTextPassword.requestFocus();
+                }
+                if(firstName.isEmpty()){
+                    editTextFirstName.setError("Please enter your First Name!");
+                    editTextFirstName.requestFocus();
+                }
+                if(lastName.isEmpty()){
+                    editTextLastName.setError("Please enter your Last Name!");
+                    editTextLastName.requestFocus();
+                }
+                if(userName.isEmpty()){
+                    editTextUsername.setError("Please enter a User Name!");
+                    editTextUsername.requestFocus();
+                }
+                if(phone.isEmpty()){
+                    editTextPhoneNumber.setError("Please enter a Phone Number!");
+                    editTextPhoneNumber.requestFocus();
+                }
+                if(!Patterns.PHONE.matcher(phone).matches()){
+                    editTextPhoneNumber.setError("Please enter valid Phone Number!");
+                    editTextPhoneNumber.requestFocus();
+                }
+                if(zip.isEmpty()){
+                    editTextZip.setError("Please enter a Zip Code");
+                    editTextZip.requestFocus();
+                }
 
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(RegNewActivity.this, new OnCompleteListener<AuthResult>() {
@@ -139,21 +179,6 @@ public class RegNewActivity extends AppCompatActivity {
         });
 
 
-    }
-
-    public void radioButtonRequesterClicked(View v) {
-//        String userActivity = "";
-//        boolean checked = ((RadioButton) v).isChecked();
-//        switch (v.getId()){
-//            case R.id.radioButtonWorker:
-//                if (checked)
-//                    userActivity = "worker";
-//                break;
-//            case R.id.radioButtonRequester:
-//                if (checked)
-//                    userActivity = "requester";
-//                break;
-//        }
     }
 
     void updateUI(String s) {

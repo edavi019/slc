@@ -28,8 +28,8 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
+            </intent-filter>
         </activity>
         <activity android:name=".PickActivity" />
         <activity android:name=".RegNewActivity" />
@@ -58,25 +58,9 @@
             android:label="@string/title_activity_requester_zip"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <!--<activity android:name=".RegNewActivity" />-->
-        <activity android:name=".ListOfWorkersActivity" >
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
+        <activity android:name=".ListOfWorkersActivity" />
         <activity android:name=".MessageActivity" />
-        <activity android:name=".ListOfMessagesActivity" >
-
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-
-        </activity>
-
+        <activity android:name=".ListOfMessagesActivity" />
         <activity android:name=".ListOfRequestersActivity" />
     </application>
 

@@ -165,42 +165,6 @@ public class MessageActivity extends AppCompatActivity {
         reference.setValue(toSend);
     }
 
-//    private void readMessages(final String myid, final String userid, final String imageurl) {
-//        mchat = new ArrayList<>();
-//
-//        reference = FirebaseDatabase.getInstance().getReference("Chats");
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                mchat.clear();
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    Chat chat = snapshot.getValue(Chat.class);
-//                    if (chat.getReceiver().equals(myid) && chat.getSender().equals(userid) ||
-//                            chat.getReceiver().equals(userid) && chat.getSender().equals(myid)){
-//                        mchat.add(chat);
-//                    }
-//
-//                    messageAdapter = new MessageAdapter(MessageActivity.this, mchat, imageurl);
-//                    recyclerView.setAdapter(messageAdapter);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//    }
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//
-//        getMenuInflater().inflate(R.menu.menu_inbox, menu);
-//
-//        return super.onCreateOptionsMenu(menu);
-//    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
