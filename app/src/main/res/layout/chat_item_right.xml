@@ -22,8 +22,8 @@
             android:text="hello"
             android:id="@+id/show_message"
             android:textSize="18sp"
-            android:background="@android:color/holo_blue_bright"
-            android:textColor="#000"
+            android:background="@color/colorPrimary"
+            android:textColor="#fff"
             android:padding="8dp"
             android:layout_alignParentEnd="true" />
 

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.mattformicola.loger.Adapter.ListOfMessagesAdapter;
@@ -71,6 +72,7 @@ public class ListOfMessagesActivity extends AppCompatActivity {
                         convos.add(value);
                     }
 
+
                 }
 
                 ListOfMessagesAdapter adapter = new ListOfMessagesAdapter(ListOfMessagesActivity.this, convos);
@@ -85,10 +87,16 @@ public class ListOfMessagesActivity extends AppCompatActivity {
                 Toast.makeText(ListOfMessagesActivity.this, "dang shits broke ", Toast.LENGTH_SHORT).show();
 
             }
-
-
-
         });
-
     }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }
