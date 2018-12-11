@@ -36,7 +36,7 @@ public class ListOfMessagesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        getSupportActionBar().  setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -72,6 +72,7 @@ public class ListOfMessagesActivity extends AppCompatActivity {
                         convos.add(value);
                     }
 
+
                 }
 
                 ListOfMessagesAdapter adapter = new ListOfMessagesAdapter(ListOfMessagesActivity.this, convos);
@@ -86,13 +87,9 @@ public class ListOfMessagesActivity extends AppCompatActivity {
                 Toast.makeText(ListOfMessagesActivity.this, "dang shits broke ", Toast.LENGTH_SHORT).show();
 
             }
-
-
-
         });
-
     }
-    @Override
+
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
